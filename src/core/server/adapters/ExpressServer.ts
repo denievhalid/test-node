@@ -1,14 +1,16 @@
 import express from "express";
-import { Server } from "@/core";
-import type { ServerOptions } from "./types";
+import { Server, type ServerOptions } from "@/core";
+import { createServer, Server as HttpServer } from "http";
 
 export class ExpressServer implements Server {
   private readonly app: express.Application;
+  private readonly httpServer: HttpServer;
   private readonly port: string;
 
   constructor(options: ServerOptions) {
     this.port = options.port;
     this.app = express();
+    this.httpServer = createServer(this.app);
 
     this.init();
   }
@@ -24,6 +26,10 @@ export class ExpressServer implements Server {
   }
 
   start() {
-    this.app.listen(this.port);
+    this.httpServer.listen(this.port);
+  }
+
+  getHttpServer(): HttpServer {
+    return this.httpServer;
   }
 }

@@ -2,10 +2,10 @@ import {
   Database,
   ExpressServer,
   Mongo,
-  Server,
   type DatabaseAdapterTypes,
   type ServerAdapterTypes,
   type ServerOptions,
+  type Server,
   type DatabaseOptions,
 } from "@/core";
 

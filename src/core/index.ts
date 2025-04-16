@@ -12,3 +12,4 @@ export {
   type ServerAdapterTypes,
   type ServerOptions,
 } from "./server";
+export { WebSocket } from "./ws";

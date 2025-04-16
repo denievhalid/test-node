@@ -1,15 +1,19 @@
+import { Database, Server, WebSocket } from "@/core";
 import type { AppOptions } from "@/core/app/types";
-import type { Database, Server } from "@/core";
 
 class App {
   private database: Database;
   private server: Server;
+  private ws: WebSocket;
 
   constructor(options: AppOptions) {
     const { database, server } = options;
 
     this.database = database;
+
     this.server = server;
+
+    this.ws = new WebSocket(this.server.getHttpServer());
   }
 
   start() {
