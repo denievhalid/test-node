@@ -1,6 +1,8 @@
-import { createApp, ExpressServer } from "@/core";
+import { AdapterTypes, createApp, ServerFactory } from "@/core";
 import { getEnv } from "@/utils";
 
-const express = new ExpressServer({ port: getEnv("PORT") });
-
-createApp(express).start();
+createApp(
+  ServerFactory.get(getEnv("SERVER") as AdapterTypes, {
+    port: getEnv("PORT"),
+  }),
+).start();
