@@ -1,3 +1,3 @@
 export type ServerOptions = {
-  port: number;
+  port: number | string;
 };

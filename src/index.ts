@@ -1,6 +1,7 @@
 import { createApp } from "@/core";
 import { ExpressServer } from "@/core";
+import { getEnv } from "@/utils";
 
-const express = new ExpressServer({ port: 5000 });
+const express = new ExpressServer({ port: getEnv("PORT") });
 
 createApp(express).start();
