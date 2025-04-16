@@ -1,7 +1,13 @@
-import type { Express } from "express";
+import { Server } from "@/core";
 
 class App {
-  constructor(private readonly express: Express) {}
+  constructor(private readonly server: Server) {}
+
+  start() {
+    this.server.start();
+  }
 }
 
-export function createApp() {}
+export function createApp(server: Server) {
+  return new App(server);
+}
