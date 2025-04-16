@@ -1,9 +1,14 @@
 export { createApp } from "./app";
-export { Database, Mongo } from "./database";
+export {
+  Database,
+  Mongo,
+  type DatabaseAdapterTypes,
+  type DatabaseOptions,
+} from "./database";
+export { Factory } from "./factories";
 export {
   ExpressServer,
   Server,
-  ServerFactory,
-  type AdapterTypes,
+  type ServerAdapterTypes,
   type ServerOptions,
 } from "./server";

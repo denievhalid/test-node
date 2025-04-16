@@ -1,2 +1,2 @@
 export { ExpressServer } from "./ExpressServer";
-export type { AdapterTypes, ServerOptions } from "./types";
+export type { ServerAdapterTypes, ServerOptions } from "./types";
