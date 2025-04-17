@@ -1,0 +1,5 @@
+{
+  "watch": ["src"],
+  "ext": "ts,mjs,js,json",
+  "exec": "node --loader ts-paths-esm-loader --experimental-specifier-resolution=node ./src/index.ts"
+}

@@ -8,7 +8,7 @@ export const getEnv = (key: string): string => {
   const value = process.env[key] as string;
 
   invariant(
-    isUndefined(value),
+    !isUndefined(value),
     `Не удалось найти переменную окружения : ${key}`,
   );
 

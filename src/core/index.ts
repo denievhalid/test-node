@@ -1,4 +1,5 @@
 export { createApp } from "./app";
+export { container } from "./container";
 export {
   Database,
   Mongo,

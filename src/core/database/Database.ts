@@ -1,3 +1,4 @@
 export interface Database {
-  connect: () => Promise<void>;
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
 }

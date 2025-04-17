@@ -1,15 +1,11 @@
-import { MessageController } from "@/domain/message";
-import type { ServerRoute } from "@/core";
+import { Router } from "express";
+import { makeInvoker } from "awilix-express";
+import { MessageController } from "@/domain";
 
-export const getRoutes = (): ServerRoute[] => [
-  {
-    method: "get",
-    path: "/messages",
-    handler: MessageController.findAll,
-  },
-  {
-    method: "post",
-    path: "/messages",
-    handler: MessageController.create,
-  },
-];
+const router = Router();
+const api = makeInvoker(MessageController);
+
+router.get("/", api("findAll"));
+router.post("/", api("create"));
+
+export const getRoutes = () => [{ path: "/messages", router }];

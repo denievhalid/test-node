@@ -1,30 +1,32 @@
-import mongoose, { Connection } from "mongoose";
-import { Database, type DatabaseOptions } from "@/core";
+import { MongoClient } from "mongodb";
+import { type Database, type DatabaseOptions } from "@/core";
+import { logger } from "@/utils";
 
 export class Mongo implements Database {
-  private readonly db: Connection;
+  private client: MongoClient;
   private readonly url: string;
 
   constructor(options: DatabaseOptions) {
     const { url } = options;
-
-    this.db = mongoose.connection;
     this.url = url;
+    this.client = new MongoClient(this.url);
   }
 
   async connect() {
-    await mongoose.connect(this.url);
+    try {
+      await this.client.connect();
+      logger.info("Соединение с базой данных установлено");
+    } catch (error) {
+      logger.error("Не удалось подключиться к базе данных", error);
+    }
   }
 
   async disconnect(): Promise<void> {
-    await mongoose.disconnect();
-  }
-
-  isConnected(): boolean {
-    return this.db.readyState === 1;
-  }
-
-  get connection(): Connection {
-    return this.db;
+    try {
+      await this.client.close();
+      logger.warn("Соединение с базой данных закрыто");
+    } catch (error) {
+      logger.error("Ошибка при закрытии соединения:", error);
+    }
   }
 }

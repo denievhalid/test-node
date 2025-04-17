@@ -1,6 +1,5 @@
 import { Database, Server, WebSocket } from "@/core";
 import type { AppOptions } from "@/core/app/types";
-import * as process from "node:process";
 
 class App {
   private database: Database;
@@ -11,9 +10,7 @@ class App {
     const { database, server } = options;
 
     this.database = database;
-
     this.server = server;
-
     this.ws = new WebSocket(this.server.getHttpServer());
   }
 
