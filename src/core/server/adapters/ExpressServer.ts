@@ -1,15 +1,23 @@
-import express from "express";
-import { Server, type ServerOptions } from "@/core";
+import express, {
+  type Request,
+  type Response,
+  type NextFunction,
+} from "express";
 import { createServer, Server as HttpServer } from "http";
+import { Server, type ServerOptions, type ServerRoute } from "@/core";
 
 export class ExpressServer implements Server {
   private readonly app: express.Application;
   private readonly httpServer: HttpServer;
   private readonly port: string;
+  private readonly routes: ServerRoute[] = [];
 
   constructor(options: ServerOptions) {
-    this.port = options.port;
+    const { port, routes } = options;
+
     this.app = express();
+    this.port = port;
+    this.routes = routes;
     this.httpServer = createServer(this.app);
 
     this.init();
@@ -23,6 +31,22 @@ export class ExpressServer implements Server {
 
     this.app.use(express.json({}));
     this.app.use(express.urlencoded({ extended: false }));
+
+    this.routes.forEach(({ handler, method, path }) => {
+      this.app[method](path, async (req, res, next) => {
+        try {
+          await handler(req, res);
+        } catch (err) {
+          next(err);
+        }
+      });
+    });
+
+    this.app.use(
+      (err: Error, req: Request, res: Response, next: NextFunction) => {
+        res.status(500).json({ message: err.message });
+      },
+    );
   }
 
   start() {

@@ -11,5 +11,6 @@ export {
   Server,
   type ServerAdapterTypes,
   type ServerOptions,
+  type ServerRoute,
 } from "./server";
 export { WebSocket } from "./ws";

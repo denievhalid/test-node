@@ -1,5 +1,6 @@
 import { Database, Server, WebSocket } from "@/core";
 import type { AppOptions } from "@/core/app/types";
+import * as process from "node:process";
 
 class App {
   private database: Database;
@@ -17,7 +18,16 @@ class App {
   }
 
   start() {
-    this.server.start();
+    this.database
+      .connect()
+      .then(() => {
+        this.server.start();
+      })
+      .catch(this.close);
+  }
+
+  close() {
+    process.exit(1);
   }
 }
 
