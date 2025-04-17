@@ -4,8 +4,8 @@ import {
   type ServerAdapterTypes,
   type DatabaseAdapterTypes,
 } from "@/core";
+import { getRoutes } from "@/routes";
 import { getEnv } from "@/utils";
-import { MessageController } from "@/domain/message";
 
 const database = Factory.getDatabase(
   getEnv("DATABASE") as DatabaseAdapterTypes,
@@ -16,18 +16,7 @@ const database = Factory.getDatabase(
 
 const server = Factory.getServer(getEnv("SERVER") as ServerAdapterTypes, {
   port: getEnv("PORT"),
-  routes: [
-    {
-      method: "get",
-      path: "/messages",
-      handler: MessageController.findAll,
-    },
-    {
-      method: "post",
-      path: "/messages",
-      handler: MessageController.create,
-    },
-  ],
+  routes: getRoutes(),
 });
 
 createApp({ database, server }).start();
