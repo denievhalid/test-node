@@ -18,8 +18,14 @@ const server = Factory.getServer(getEnv("SERVER") as ServerAdapterTypes, {
   port: getEnv("PORT"),
   routes: [
     {
+      method: "get",
       path: "/messages",
       handler: MessageController.findAll,
+    },
+    {
+      method: "post",
+      path: "/messages",
+      handler: MessageController.create,
     },
   ],
 });
