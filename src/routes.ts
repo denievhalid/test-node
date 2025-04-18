@@ -3,10 +3,9 @@ import { makeInvoker } from "awilix-express";
 import { MessageController } from "@/domain";
 
 const router = Router();
-const api = makeInvoker<MessageController>((cradle) => {
-  console.log(typeof cradle.messageRepository);
-  return cradle.messageController;
-});
+const api = makeInvoker<MessageController>(
+  (cradle) => cradle.messageController,
+);
 
 router.get("/", api("findAll"));
 router.post("/", api("buffer"));
