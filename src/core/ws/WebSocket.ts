@@ -12,6 +12,14 @@ export class WebSocket {
     this.initListeners();
   }
 
+  broadcast(msg: any) {
+    for (const socket of this.getSockets()) {
+      if (socket.readyState === WS.OPEN) {
+        socket.send(msg);
+      }
+    }
+  }
+
   initListeners() {
     this.ws.on("connection", (socket) => {
       this.sockets.add(socket);
@@ -25,6 +33,6 @@ export class WebSocket {
   }
 
   getSockets() {
-    return this.sockets;
+    return Array.from(this.sockets);
   }
 }

@@ -1,10 +1,10 @@
 import { createContainer, asClass } from "awilix";
-import { MessageService } from "@/domain/message";
+import { MessageController, MessageService, MessageRepository } from "@/domain";
 
 export const container = createContainer();
 
-export { createContainer };
-
 container.register({
+  messageRepository: asClass(MessageRepository).scoped(),
   messageService: asClass(MessageService).scoped(),
+  messageController: asClass(MessageController).scoped(),
 });

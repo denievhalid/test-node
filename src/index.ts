@@ -10,6 +10,7 @@ import { getEnv } from "@/utils";
 const database = Factory.getDatabase(
   getEnv("DATABASE") as DatabaseAdapterTypes,
   {
+    name: getEnv("DB_NAME"),
     url: getEnv("DB_URL"),
   },
 );

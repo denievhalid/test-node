@@ -1,4 +1,4 @@
-export { createApp } from "./app";
+export { createApp, type AppOptions } from "./app";
 export { container } from "./container";
 export {
   Database,

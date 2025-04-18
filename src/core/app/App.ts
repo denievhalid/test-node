@@ -1,5 +1,5 @@
-import { Database, Server, WebSocket } from "@/core";
-import type { AppOptions } from "@/core/app/types";
+import { Database, Server, WebSocket, type AppOptions } from "@/core";
+import { logger } from "@/utils";
 
 class App {
   private database: Database;
@@ -19,11 +19,23 @@ class App {
       .connect()
       .then(() => {
         this.server.start();
+
+        this.database.watch("messages").on("data", (change: any) => {
+          if (change.operationType === "insert") {
+            this.ws.broadcast(
+              JSON.stringify({
+                event: "new-message",
+                data: change.fullDocument,
+              }),
+            );
+          }
+        });
       })
       .catch(this.close);
   }
 
   close() {
+    logger.warn("Приложение остановлено");
     process.exit(1);
   }
 }
